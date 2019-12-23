@@ -23,7 +23,7 @@ var (
 	// tweegoVersion holds the current version info.
 	tweegoVersion = versionInfo{
 		major: 2,
-		minor: 0,
+		minor: 1,
 		patch: 0,
 		pre:   "",
 	}
