@@ -16,7 +16,7 @@ import (
 	"path/filepath"
 	"strings"
 	// external packages
-	"github.com/blang/semver"
+	"github.com/Masterminds/semver/v3"
 )
 
 type twine2FormatJSON struct {
@@ -213,9 +213,9 @@ func (m storyFormatsMap) getIDFromTwine2Name(name string) string {
 		}
 
 		if f.name == name {
-			if v, err := semver.ParseTolerant(f.version); err == nil {
-				if found == nil || v.GT(*found) {
-					found = &v
+			if have, err := semver.NewVersion(f.version); err == nil {
+				if found == nil || have.GreaterThan(found) {
+					found = have
 					id = f.id
 				}
 			}
@@ -231,11 +231,10 @@ func (m storyFormatsMap) getIDFromTwine2NameAndVersion(name, version string) str
 		found  *semver.Version
 		id     string
 	)
-	if v, err := semver.ParseTolerant(version); err == nil {
-		wanted = &v
+	if v, err := semver.NewVersion(version); err == nil {
+		wanted = v
 	} else {
 		log.Printf("warning: format %q: Auto-selecting greatest version; Could not parse version %q.", name, version)
-		wanted = &semver.Version{Major: 0, Minor: 0, Patch: 0}
 	}
 
 	for _, f := range m {
@@ -244,10 +243,10 @@ func (m storyFormatsMap) getIDFromTwine2NameAndVersion(name, version string) str
 		}
 
 		if f.name == name {
-			if v, err := semver.ParseTolerant(f.version); err == nil {
-				if wanted.Major == 0 || v.Major == wanted.Major && v.GTE(*wanted) {
-					if found == nil || v.GT(*found) {
-						found = &v
+			if have, err := semver.NewVersion(f.version); err == nil {
+				if wanted == nil || have.Major() == wanted.Major() && have.Compare(wanted) > -1 {
+					if found == nil || have.GreaterThan(found) {
+						found = have
 						id = f.id
 					}
 				}

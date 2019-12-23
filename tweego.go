@@ -26,7 +26,8 @@ func main() {
 	// Build the output and, possibly, log various stats.
 	if c.watchFiles {
 		buildName := relPath(c.outFile)
-		watchFilesystem(c.sourcePaths, c.outFile, func() {
+		paths := append(c.sourcePaths, c.modulePaths...)
+		watchFilesystem(paths, c.outFile, func() {
 			log.Printf("BUILDING: %s", buildName)
 			buildOutput(c)
 		})

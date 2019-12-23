@@ -56,8 +56,8 @@ The various methods for specifying configuration settings cascade in the followi
 <dd>
 	<p>Path(s) to search for story formats.  The value should be a list of directories to search for story formats.  You may specify one directory or several.  The format is exactly the same as any other <em>path type</em> environment variable for your operating system.</p>
 	<p class="tip" role="note"><b>Tip:</b> Setting <var>TWEEGO_PATH</var> is only necessary if you intend to place your story formats outside of the directories normally searched by Tweego.  See <a href="#getting-started-story-formats-search-directories">Search Directories</a> for more information.</p>
-	<p role="note"><b>Note:</b> To separate multiple directories within <em>path</em> variables, Unix-like operating systems use the colon, while Windows uses the semi-colon.  Only relevant if you intend to specify multiple directories.</p>
-	<p><strong>Unix-y examples</strong></p>
+	<p role="note"><b>Note:</b> To separate multiple directories within <em>path</em> variables, Unix/Unix-like operating systems use the colon (<kbd>:</kbd>), while Windows uses the semi-colon (<kbd>;</kbd>).  Only relevant if you intend to specify multiple directories.</p>
+	<p><strong>Unix/Unix-like examples</strong></p>
 	<p>If you wanted Tweego to search <code>/usr/local/storyformats</code>, then you'd set <code>TWEEGO_PATH</code> to:</p>
 	<pre><code>/usr/local/storyformats</code></pre>
 	<p>If you wanted Tweego to search <code>/storyformats</code> and <code>/usr/local/storyformats</code>, then you'd set <code>TWEEGO_PATH</code> to:</p>
@@ -106,7 +106,7 @@ When Tweego is run, it finds story formats to use by searching the following dir
 4. The directories specified via the <var>TWEEGO_PATH</var> environment variable.  See <a href="#getting-started-environment-variables">Environment Variables</a> for more information.
 
 <p role="note"><b>Note:</b>
-For legacy compatibility, the following directories are also checked during steps #1–3: <kbd>story-formats</kbd>, <kbd>storyFormats</kbd>, and <kbd>targets</kbd>.  You are encouraged to use one of the directory names listed above instead.
+For legacy compatibility, the following directories are also checked during steps #1–3: <kbd>story-formats</kbd>, <kbd>storyFormats</kbd>, and <kbd>targets</kbd>.  You are <strong><em>strongly encouraged</em></strong> to use one of the directory names listed above instead.
 </p>
 
 <p class="warning" role="note"><b>Warning:</b>

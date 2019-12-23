@@ -48,6 +48,7 @@ Options:
   -m SRC, --module=SRC     Module sources (repeatable); may consist of supported
                              files and/or directories to recursively search for
                              such files.
+      --no-trim            Do not trim whitespace surrounding passages.
   -o FILE, --output=FILE   Name of the output file (default: %q).
   -s NAME, --start=NAME    Name of the starting passage (default: the passage
                              set by the story data, elsewise %q).
