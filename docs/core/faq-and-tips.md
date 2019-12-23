@@ -5,7 +5,7 @@
 
 This is a collection of tips, from how to avoid pitfalls to best practices.
 
-Suggestions for new entries may be submitted by [creating a new issue](https://bitbucket.org/tmedwards/tweego/issues?status=new&status=open) at Tweego's [code repository](https://bitbucket.org/tmedwards/tweego/).  **NOTE:** Acceptance of submissions ***is not*** guaranteed.
+Suggestions for new entries may be submitted by [creating a new issue](https://github.com/tmedwards/tweego/issues) at Tweego's [code repository](https://github.com/tmedwards/tweego).  **NOTE:** Acceptance of submissions ***is not*** guaranteed.
 
 
 <!-- ***************************************************************************
@@ -14,7 +14,7 @@ Suggestions for new entries may be submitted by [creating a new issue](https://b
 <span id="faq-and-tips-avoid-processing-files"></span>
 ## Avoid processing files
 
-The way to avoid having Tweego process files is to not pass it the files in the first place—i.e. keep the files in question separate from the files you want Tweego to compile.
+The way to avoid having Tweego process files is to not pass it the files in the first place—i.e., keep the files in question separate from the files you want Tweego to compile.
 
 Using image files as an example, I would generally recommend a directory structure something like:
 

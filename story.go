@@ -9,6 +9,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 )
 
 // Twine 1 story metadata.
@@ -182,6 +183,8 @@ func (s *story) add(p *passage) {
 			log.Printf(`warning: Cannot unmarshal "StorySettings" special passage; %s.`, err.Error())
 		}
 	case "StoryTitle":
+		// Rebuild the passage contents to trim erroneous whitespace surrounding the title.
+		p.text = strings.TrimSpace(p.text)
 		s.name = p.text
 	}
 

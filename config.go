@@ -12,7 +12,7 @@ import (
 	"os"
 	"path/filepath"
 	// internal packages
-	"bitbucket.org/tmedwards/tweego/internal/option"
+	"github.com/tmedwards/tweego/internal/option"
 	// external packages
 	"github.com/paulrosania/go-charset/charset"
 )
@@ -44,11 +44,12 @@ type config struct {
 	outMode     outputMode // output mode
 
 	formats     storyFormatsMap // map of all enumerated story formats
+	logFiles    bool            // log input files
+	logStats    bool            // log story statistics
 	testMode    bool            // enable test mode
+	trim        bool            // enable passage trimming
 	twee2Compat bool            // enable Twee2 header extension compatibility mode
 	watchFiles  bool            // enable filesystem watching
-	logStats    bool            // log story statistics
-	logFiles    bool            // log input files
 }
 
 const (
@@ -56,6 +57,7 @@ const (
 	defaultOutFile   = "-" // <stdout>
 	defaultOutMode   = outModeHTML
 	defaultStartName = "Start"
+	defaultTrimState = true
 )
 
 // newConfig creates a new config instance
@@ -97,20 +99,10 @@ func newConfig() *config {
 		common:  common{formatID: defaultFormatID, startName: defaultStartName},
 		outFile: defaultOutFile,
 		outMode: defaultOutMode,
+		trim:    defaultTrimState,
 	}
 
 	// Merge values from the environment variables.
-	// /*
-	// 	LEGACY
-	// */
-	// for _, env := range []string{"TWEEGO_CHARSET", "TWEEGO_FORMAT"} {
-	// 	if _, exists := os.LookupEnv(env); exists {
-	// 		log.Printf("warning: Detected obsolete environment variable %q.  Please remove it from your environment.", env)
-	// 	}
-	// }
-	// /*
-	// 	END LEGACY
-	// */
 	if env := os.Getenv("TWEEGO_PATH"); env != "" {
 		formatDirs = append(formatDirs, filepath.SplitList(env)...)
 	}
@@ -144,6 +136,7 @@ func newConfig() *config {
 	options.Add("logfiles", "--log-files")
 	options.Add("logstats", "-l|--log-stats")
 	options.Add("module", "-m=s+|--module=s+")
+	options.Add("no_trim", "--no-trim")
 	options.Add("output", "-o=s|--output=s")
 	options.Add("start", "-s=s|--start=s")
 	options.Add("test", "-t|--test")
@@ -180,6 +173,8 @@ func newConfig() *config {
 				c.logStats = true
 			case "module":
 				c.modulePaths = append(c.modulePaths, val.([]string)...)
+			case "no_trim":
+				c.trim = false
 			case "output":
 				c.outFile = val.(string)
 			case "start":

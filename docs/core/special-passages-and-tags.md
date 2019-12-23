@@ -25,7 +25,7 @@ The names of all special passages and tags listed herein are case sensitive, thu
 <span id="special-passages-start"></span>
 ### `Start`
 
-The `Start` passage will, by default, be used as the starting passage—i.e. the first normal passage displayed to the player.  That behavior may be overridden via either the <var>start</var> property from the [`StoryData` passage](#special-passages-storydata) or the start command line option (<kbd>-s NAME</kbd>, <kbd>--start=NAME</kbd>).
+The `Start` passage will, by default, be used as the starting passage—i.e., the first normal passage displayed to the player.  That behavior may be overridden via either the <var>start</var> property from the [`StoryData` passage](#special-passages-storydata) or the start command line option (<kbd>-s NAME</kbd>, <kbd>--start=NAME</kbd>).
 
 <p class="tip" role="note"><b>Tip:</b>
 It is <strong><em>strongly recommended</em></strong> that you simply use the default starting name, <code>Start</code>, when beginning new projects.

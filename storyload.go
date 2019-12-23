@@ -14,10 +14,9 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"unicode"
 	// internal packages
-	twee2 "bitbucket.org/tmedwards/tweego/internal/twee2compat"
-	twlex "bitbucket.org/tmedwards/tweego/internal/tweelexer"
+	twee2 "github.com/tmedwards/tweego/internal/twee2compat"
+	twlex "github.com/tmedwards/tweego/internal/tweelexer"
 	// external packages
 	"golang.org/x/net/html"
 )
@@ -32,11 +31,11 @@ func (s *story) load(filenames []string, c *config) {
 		switch normalizedFileExt(filename) {
 		// NOTE: The case values here should match those in `filesystem.go:knownFileType()`.
 		case "tw", "twee":
-			if err := s.loadTwee(filename, c.encoding, c.twee2Compat); err != nil {
+			if err := s.loadTwee(filename, c.encoding, c.trim, c.twee2Compat); err != nil {
 				log.Fatalf("error: load %s: %s", filename, err.Error())
 			}
 		case "tw2", "twee2":
-			if err := s.loadTwee(filename, c.encoding, true); err != nil {
+			if err := s.loadTwee(filename, c.encoding, c.trim, true); err != nil {
 				log.Fatalf("error: load %s: %s", filename, err.Error())
 			}
 		case "htm", "html":
@@ -89,7 +88,7 @@ func (s *story) load(filenames []string, c *config) {
 	}
 }
 
-func (s *story) loadTwee(filename, encoding string, twee2Compat bool) error {
+func (s *story) loadTwee(filename, encoding string, trim, twee2Compat bool) error {
 	source, err := fileReadAllWithEncoding(filename, encoding)
 	if err != nil {
 		return err
@@ -109,12 +108,6 @@ ParseLoop:
 	for {
 		p := &passage{}
 		for item, ok := lex.NextItem(); ok; item, ok = lex.NextItem() {
-			// switch item.Type {
-			// case twlex.ItemEOF, twlex.ItemHeader:
-			// 	log.Println()
-			// }
-			// log.Printf("%v\n", item)
-
 			switch item.Type {
 			case twlex.ItemError:
 				return fmt.Errorf("line %d: Malformed twee source; %s.", item.Line, item.Val)
@@ -157,8 +150,13 @@ ParseLoop:
 				}
 
 			case twlex.ItemContent:
-				// p.text = string(bytes.TrimSpace(item.Val))
-				p.text = string(bytes.TrimRightFunc(item.Val, unicode.IsSpace))
+				if trim {
+					// Trim whitespace surrounding (leading and trailing) passages.
+					p.text = string(bytes.TrimSpace(item.Val))
+				} else {
+					// Do not trim whitespace surrounding passages.
+					p.text = string(item.Val)
+				}
 			}
 
 			lastType = item.Type

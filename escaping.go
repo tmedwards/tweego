@@ -18,7 +18,7 @@ import (
 var attrEscaper = strings.NewReplacer(
 	`&`, `&amp;`,
 	`"`, `&quot;`,
-	// FIXME: Keep the following?  All markup we generate double quotes attribute
+	// QUESTION: Keep the following?  All markup we generate double quotes attribute
 	// values, so escaping single quotes/apostrophes isn't actually necessary.
 	`'`, `&#39;`,
 )
@@ -30,15 +30,14 @@ func attrEscapeString(s string) string {
 	return attrEscaper.Replace(s)
 }
 
-// Escape the minimum characters required for general HTML escaping—i.e. only
+// Escape the minimum characters required for general HTML escaping—i.e., only
 // the special characters (`&`, `<`, `>`, `"`, `'`).
 //
 // NOTE: The following exists because `html.EscapeString()` converts double
 // quotes (`"`) to their decimal numeric character reference (`&#34;`) rather
 // than to their entity (`&quot;`).  While the behavior is entirely legal, and
-// browsers will happily accept the NCRs, a not insignificant amount of JavaScript
-// code does not expect it and will fail to properly unescape the NCR—expecting
-// only `&quot;`.
+// browsers will happily accept the NCRs, a not insignificant amount of code in
+// the wild only checks for `&quot;` and will fail to properly unescape the NCR.
 //
 // The primary special characters (`&`, `<`, `>`, `"`) should always be
 // converted to their entity forms and never to an NCR form.  Saving one byte
@@ -101,11 +100,6 @@ func tweeEscapeBytes(s []byte) []byte {
 	if len(s) == 0 {
 		return []byte(nil)
 	}
-	// e := bytes.Replace(s, []byte("\\"), []byte("\\\\"), -1)
-	// e = bytes.Replace(e, []byte("["), []byte("\\["), -1)
-	// e = bytes.Replace(e, []byte("]"), []byte("\\]"), -1)
-	// e = bytes.Replace(e, []byte("{"), []byte("\\{"), -1)
-	// e = bytes.Replace(e, []byte("}"), []byte("\\}"), -1)
 
 	// NOTE: The slices this will be used with will be short enough that
 	// iterating a slice twice shouldn't be problematic.  That said,
