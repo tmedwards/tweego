@@ -4,7 +4,7 @@
 
 See [Tweego's documentation](http://www.motoslave.net/tweego/docs/) for information on how to set it up and use it.
 
-Tweego has a Trello board, [Tweego TODO](https://trello.com/b/l5xuRzFu).  Feel free to comment.
+If you believe that you've found a bug in Tweego or simply wish to make a suggestion, you may do so by [creating a new issue](https://github.com/tmedwards/tweego/issues).  Tweego also has a [work log](https://github.com/tmedwards/tweego/projects/1) that may be of interest.
 
 ## INSTALLATION
 
@@ -19,7 +19,7 @@ Tweego is written in the Go programming language, so you'll need to install it, 
 1. [Download and install the Go programming language (want ≥v1.13)](http://golang.org/doc/install)
 2. [Download and install the Git source control management tool](https://git-scm.com/)
 
-Once all the tooling is installed and set up, the next step is to fetch the Tweego source code.  Open a shell to wherever you wish to store the code and run the following command:
+Once all the tooling is installed and set up, the next step is to fetch the Tweego source code.  Open a shell to wherever you wish to store the code and run the following command to clone the repository:
 
 ```
 git clone https://github.com/tmedwards/tweego.git
@@ -31,7 +31,7 @@ Next, change to the directory that the previous command created:
 cd tweego
 ```
 
-Next, fetch Tweego's dependencies via the following command:
+Next, fetch Tweego's dependencies:
 
 ```
 go get

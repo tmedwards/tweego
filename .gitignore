@@ -1,34 +1,32 @@
-# Binaries for programs and plugins
+# Binaries
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
-
-# Test binary, built with `go test -c`
 *.test
 
-# Output of the go coverage tool, specifically when used with LiteIDE
+# Coverage tool (specifically when used with LiteIDE)
 *.out
 
-# Shell scripts
+# Scripts
 *.sh
 
-# Dependency directories & files
-go.sum
-# vendor/
-
-# Documentation directories & files
+# Documentation
 *.html
 
-# Build & distribution directories
-dist/
+# Dependencies
+go.sum
 
-# Testing directories & files
+# Builds & distribution
+dist/
+licenses/
+
+# Testing
 storyformats/
 prerelease.go
 
-# Miscellaneous directories & files
+# Miscellaneous
 _*
 CHANGELOG*
 TODO*
