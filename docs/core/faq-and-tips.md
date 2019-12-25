@@ -5,7 +5,7 @@
 
 This is a collection of tips, from how to avoid pitfalls to best practices.
 
-Suggestions for new entries may be submitted by [creating a new issue](https://github.com/tmedwards/tweego/issues) at Tweego's [code repository](https://github.com/tmedwards/tweego).  **NOTE:** Acceptance of submissions ***is not*** guaranteed.
+Suggestions for new entries may be submitted by [creating a new issue](https://github.com/tmedwards/tweego/issues) at Tweego's [source code repository](https://github.com/tmedwards/tweego).  **NOTE:** Acceptance of submissions ***is not*** guaranteed.
 
 
 <!-- ***************************************************************************
