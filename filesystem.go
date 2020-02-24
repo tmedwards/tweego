@@ -33,7 +33,7 @@ func init() {
 	}
 }
 
-var noOutToIn = fmt.Errorf("no output to input source")
+var errNoOutToIn = fmt.Errorf("no output to input source")
 
 // Walk the specified pathnames, collecting regular files.
 func getFilenames(pathnames []string, outFilename string) []string {
@@ -55,7 +55,7 @@ func getFilenames(pathnames []string, outFilename string) []string {
 			return err
 		}
 		if absolute == absOutFile {
-			return noOutToIn
+			return errNoOutToIn
 		}
 		relative, _ := filepath.Rel(workingDir, absolute) // Failure is okay.
 		if relative != "" {
@@ -77,7 +77,7 @@ func getFilenames(pathnames []string, outFilename string) []string {
 			log.Print("warning: path -: Reading from standard input is unsupported.")
 			continue
 		} else if err := filepath.Walk(pathname, fileWalker); err != nil {
-			if err == noOutToIn {
+			if err == errNoOutToIn {
 				log.Fatalf("error: path %s: Output file cannot be an input source.", pathname)
 			} else {
 				log.Printf("warning: path %s: %s", pathname, err.Error())

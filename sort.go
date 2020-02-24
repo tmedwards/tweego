@@ -10,6 +10,7 @@ import (
 	"unicode"
 )
 
+// StringsInsensitively provides for case insensitively sorting slices of strings.
 type StringsInsensitively []string
 
 func (p StringsInsensitively) Len() int {
