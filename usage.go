@@ -1,5 +1,5 @@
 /*
-	Copyright © 2014–2019 Thomas Michael Edwards. All rights reserved.
+	Copyright © 2014–2020 Thomas Michael Edwards. All rights reserved.
 	Use of this source code is governed by a Simplified BSD License which
 	can be found in the LICENSE file.
 */
@@ -120,7 +120,7 @@ func usageVersion() {
 	fmt.Fprintf(os.Stderr, "\n%s, %s\n", tweegoName, tweegoVersion)
 	fmt.Fprint(os.Stderr, `
 Tweego (a Twee compiler in Go) [http://www.motoslave.net/tweego/]
-Copyright (c) 2014-2019 Thomas Michael Edwards. All rights reserved.
+Copyright (c) 2014-2020 Thomas Michael Edwards. All rights reserved.
 
 `)
 	os.Exit(1)
