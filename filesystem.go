@@ -12,7 +12,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 	// external packages
 	"github.com/radovskyb/watcher"
@@ -133,12 +132,9 @@ func watchFilesystem(pathnames []string, outFilename string, buildCallback func(
 					var pathname string
 					switch event.Op {
 					case watcher.Move, watcher.Rename:
-						// NOTE: Format of Move/Rename event `Path` field: "oldName -> newName".
-						// TODO: Should probably error out if we can't split the event.Path value.
-						names := strings.Split(event.Path, " -> ")
-						pathname = fmt.Sprintf("%s -> %s", relPath(names[0]), relPath(names[1]))
+						pathname = fmt.Sprintf("%s -> %s", relPath(event.OldPath), relPath(event.Path))
 						if !build && !isDir {
-							build = knownFileType(names[0]) || knownFileType(names[1])
+							build = knownFileType(event.OldPath) || knownFileType(event.Path)
 						}
 					default:
 						pathname = relPath(event.Path)
