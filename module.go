@@ -98,8 +98,7 @@ func loadModuleFont(filename string) ([]byte, error) {
 	}
 
 	var (
-		name      = filepath.Base(filename)
-		family    = strings.Split(name, ".")[0]
+		family    = strings.Split(filepath.Base(filename), ".")[0]
 		idSlug    = "style-module-" + slugify(family)
 		ext       = normalizedFileExt(filename)
 		mediaType = mediaTypeFromExt(ext)
