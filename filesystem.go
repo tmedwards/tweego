@@ -1,5 +1,5 @@
 /*
-	Copyright © 2014–2019 Thomas Michael Edwards. All rights reserved.
+	Copyright © 2014–2020 Thomas Michael Edwards. All rights reserved.
 	Use of this source code is governed by a Simplified BSD License which
 	can be found in the LICENSE file.
 */
@@ -12,7 +12,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 	// external packages
 	"github.com/radovskyb/watcher"
@@ -33,7 +32,7 @@ func init() {
 	}
 }
 
-var noOutToIn = fmt.Errorf("no output to input source")
+var errNoOutToIn = fmt.Errorf("no output to input source")
 
 // Walk the specified pathnames, collecting regular files.
 func getFilenames(pathnames []string, outFilename string) []string {
@@ -55,7 +54,7 @@ func getFilenames(pathnames []string, outFilename string) []string {
 			return err
 		}
 		if absolute == absOutFile {
-			return noOutToIn
+			return errNoOutToIn
 		}
 		relative, _ := filepath.Rel(workingDir, absolute) // Failure is okay.
 		if relative != "" {
@@ -77,7 +76,7 @@ func getFilenames(pathnames []string, outFilename string) []string {
 			log.Print("warning: path -: Reading from standard input is unsupported.")
 			continue
 		} else if err := filepath.Walk(pathname, fileWalker); err != nil {
-			if err == noOutToIn {
+			if err == errNoOutToIn {
 				log.Fatalf("error: path %s: Output file cannot be an input source.", pathname)
 			} else {
 				log.Printf("warning: path %s: %s", pathname, err.Error())
@@ -133,12 +132,9 @@ func watchFilesystem(pathnames []string, outFilename string, buildCallback func(
 					var pathname string
 					switch event.Op {
 					case watcher.Move, watcher.Rename:
-						// NOTE: Format of Move/Rename event `Path` field: "oldName -> newName".
-						// TODO: Should probably error out if we can't split the event.Path value.
-						names := strings.Split(event.Path, " -> ")
-						pathname = fmt.Sprintf("%s -> %s", relPath(names[0]), relPath(names[1]))
+						pathname = fmt.Sprintf("%s -> %s", relPath(event.OldPath), relPath(event.Path))
 						if !build && !isDir {
-							build = knownFileType(names[0]) || knownFileType(names[1])
+							build = knownFileType(event.OldPath) || knownFileType(event.Path)
 						}
 					default:
 						pathname = relPath(event.Path)

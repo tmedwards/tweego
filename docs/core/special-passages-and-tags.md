@@ -46,7 +46,7 @@ The core properties used with all story formats include:
 The properties used only with Twine&nbsp;2-style story formats include:
 
 - <var>format</var>: (string) Optional.  The name of the story format to compile against—e.g., `SugarCube`, `Harlowe`, `Chapbook`, `Snowman`.
-- <var>format-version</var>: (string) Optional.  The version of the story format to compile against—e.g., `2.29.0`.  From the installed story formats matching the name specified in <var>format</var>, Tweego will attempt to use the greatest version that matches the specified major version—i.e., if <var>format-version</var> is `2.0.0` and you have the versions `1.0.0`, `2.0.0`, `2.5.0`, and `3.0.0` installed, Tweego will choose `2.5.0`.
+- <var>format-version</var>: (string) Optional.  The version of the story format to compile against.  Story format versions follow the [Semantic Versioning specification](https://semver.org/), though generally use only the <var>major.minor.patch</var> form—e.g., `2.30.0`.  From the installed story formats matching the name specified in <var>format</var>, Tweego will attempt to use the greatest version that matches the specified <var>major</var> version—i.e., if <var>format-version</var> is `2.0.0` and you have the versions `1.0.0`, `2.0.0`, `2.5.0`, and `3.0.0` installed, then Tweego will choose `2.5.0`.
 
 <p role="note"><b>Note:</b>
 The above is <em>not</em> an exhaustive list of all Twine&nbsp;2-style story format properties.  There are others available that are only useful when actually interoperating with Twine&nbsp;2—e.g, <var>tag-colors</var> and <var>zoom</var>.  See the <a href="https://github.com/iftechfoundation/twine-specs/blob/master/twee-3-specification.md" target="&#95;blank">twee-3-specification.md</a> for more information.
@@ -57,7 +57,7 @@ To compile against a specific version of a story format, use the format command 
 </p>
 
 <p class="warning" role="note"><b>Warning:</b>
-JSON chunks are not JavaScript object literals, though they look much alike.  Property names must always be double quoted and you should not include a trailing comma after the last property.
+JSON chunks are not JavaScript object literals, though they look much alike.  Property names must always be double quoted and you must not include a trailing comma after the last property.
 </p>
 
 #### Example
@@ -67,7 +67,7 @@ JSON chunks are not JavaScript object literals, though they look much alike.  Pr
 {
 	"ifid": "D674C58C-DEFA-4F70-B7A2-27742230C0FC",
 	"format": "SugarCube",
-	"format-version": "2.29.0",
+	"format-version": "2.30.0",
 	"start": "My Starting Passage"
 }
 ```

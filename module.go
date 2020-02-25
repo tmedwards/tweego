@@ -1,5 +1,5 @@
 /*
-	Copyright © 2014–2019 Thomas Michael Edwards. All rights reserved.
+	Copyright © 2014–2020 Thomas Michael Edwards. All rights reserved.
 	Use of this source code is governed by a Simplified BSD License which
 	can be found in the LICENSE file.
 */
@@ -98,8 +98,7 @@ func loadModuleFont(filename string) ([]byte, error) {
 	}
 
 	var (
-		name      = filepath.Base(filename)
-		family    = strings.Split(name, ".")[0]
+		family    = strings.Split(filepath.Base(filename), ".")[0]
 		idSlug    = "style-module-" + slugify(family)
 		ext       = normalizedFileExt(filename)
 		mediaType = mediaTypeFromExt(ext)

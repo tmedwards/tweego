@@ -45,7 +45,7 @@ You may convert a Twee2 notation file to a Twee&nbsp;v3 notation file like so:
 tweego -d -o twee_v3_file.twee twee2_file.tw2
 ```
 
-Or, if the Twee2 notation file has a standard Twee file extension, like so:
+Or, if the Twee2 notation file has a standard Twee file extension (`.tw`, `.twee`), like so:
 
 ```
 tweego --twee2-compat -d -o twee_v3_file.twee twee2_file.twee

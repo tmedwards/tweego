@@ -1,5 +1,5 @@
 /*
-	Copyright © 2014–2019 Thomas Michael Edwards. All rights reserved.
+	Copyright © 2014–2020 Thomas Michael Edwards. All rights reserved.
 	Use of this source code is governed by a Simplified BSD License which
 	can be found in the LICENSE file.
 */
@@ -10,6 +10,7 @@ import (
 	"unicode"
 )
 
+// StringsInsensitively provides for case insensitively sorting slices of strings.
 type StringsInsensitively []string
 
 func (p StringsInsensitively) Len() int {

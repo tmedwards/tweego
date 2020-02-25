@@ -1,5 +1,5 @@
 /*
-	Copyright © 2014–2019 Thomas Michael Edwards. All rights reserved.
+	Copyright © 2014–2020 Thomas Michael Edwards. All rights reserved.
 	Use of this source code is governed by a Simplified BSD License which
 	can be found in the LICENSE file.
 */
@@ -85,10 +85,18 @@ func normalizedFileExt(filename string) string {
 	return strings.ToLower(ext[1:])
 }
 
+// Returns a trimmed and encoded slug of the passed string that should be safe
+// for use as a DOM ID or class name.
 func slugify(original string) string {
-	// TODO: Maybe expand this to include non-ASCII alphas?
-	invalidRe := regexp.MustCompile(`[^[:word:]-]`)
-	return strings.ToLower(invalidRe.ReplaceAllLiteralString(original, "-"))
+	// NOTE: The range of illegal characters consists of: C0 controls, space, exclamation,
+	// double quote, number, dollar, percent, ampersand, single quote, left paren, right
+	// paren, asterisk, plus, comma, hyphen, period, forward slash, colon, semi-colon,
+	// less-than, equals, greater-than, question, at, left bracket, backslash, right
+	// bracket, caret, backquote/grave, left brace, pipe/vertical-bar, right brace, tilde,
+	// delete, C1 controls.
+	illegalRe := regexp.MustCompile(`[\x00-\x20!-/:-@[-^\x60{-\x9f]+`)
+
+	return illegalRe.ReplaceAllLiteralString(original, "_")
 }
 
 func stringSliceContains(haystack []string, needle string) bool {
