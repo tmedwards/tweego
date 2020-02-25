@@ -24,7 +24,7 @@ var (
 	tweegoVersion = versionInfo{
 		major: 2,
 		minor: 1,
-		patch: 0,
+		patch: 1,
 		pre:   "",
 	}
 	// tweegoVersion holds the build ID.
