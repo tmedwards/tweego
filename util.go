@@ -94,9 +94,9 @@ func slugify(original string) string {
 	// less-than, equals, greater-than, question, at, left bracket, backslash, right
 	// bracket, caret, backquote/grave, left brace, pipe/vertical-bar, right brace, tilde,
 	// delete, C1 controls.
-	invalidRe := regexp.MustCompile(`[\x00-\x20!"#$%&'()*+,\-./:;<=>?@[\\\]^\x60{|}~\x7f-\x9f]+`)
+	illegalRe := regexp.MustCompile(`[\x00-\x20!-/:-@[-^\x60{-\x9f]+`)
 
-	return strings.ToLower(invalidRe.ReplaceAllLiteralString(original, "-"))
+	return illegalRe.ReplaceAllLiteralString(original, "_")
 }
 
 func stringSliceContains(haystack []string, needle string) bool {
