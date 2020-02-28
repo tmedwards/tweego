@@ -96,7 +96,7 @@ func slugify(original string) string {
 	// delete, C1 controls.
 	illegalRe := regexp.MustCompile(`[\x00-\x20!-/:-@[-^\x60{-\x9f]+`)
 
-	return illegalRe.ReplaceAllLiteralString(original, "_")
+	return illegalRe.ReplaceAllLiteralString(original, "-")
 }
 
 func stringSliceContains(haystack []string, needle string) bool {
