@@ -20,8 +20,9 @@
 
 * [Overview](#usage-overview)
 * [Options](#usage-options)
-* [Basic Examples](#usage-basic-examples)
+* [Supported Files](#usage-supported-files)
 * [File &amp; Directory Handling](#usage-file-and-directory-handling)
+* [Basic Examples](#usage-basic-examples)
 
 ## [Twee Notation](#twee-notation)
 

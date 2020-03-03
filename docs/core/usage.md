@@ -20,7 +20,7 @@ Basic command line usage is as follows:
 tweego [options] sources…
 ```
 
-Where <code>[options]</code> are mostly optional configuration flags—see [Options](#usage-options)—and <code>sources</code> are the input sources which may consist of supported files and/or directories to recursively search for such files.  Many types of files are supported as input sources—see [File &amp; Directory Handling](#usage-file-and-directory-handling) for more information.
+Where <code>[options]</code> are mostly optional configuration flags—see [Options](#usage-options)—and <code>sources</code> are the input sources which may consist of supported files and/or directories to recursively search for such files.  Many types of files are supported as input sources—see [Supported Files](#usage-supported-files) for more information.
 
 
 <!-- ***************************************************************************
@@ -73,54 +73,14 @@ Where <code>[options]</code> are mostly optional configuration flags—see [Opti
 
 
 <!-- ***************************************************************************
-	Basic Examples
+	Supported Files
 **************************************************************************** -->
-<span id="usage-basic-examples"></span>
-## Basic Examples
+<span id="usage-supported-files"></span>
+## Supported Files
 
-Compile <kbd>example_1.twee</kbd> as <kbd>example_1.html</kbd> with the default story format:
+Tweego supports various types of files for use in projects.  File types are recognized by filename extension, so all files ***must*** have an extension.
 
-```
-tweego -o example_1.html example_1.twee
-```
-
-Compile all files in <kbd>example_directory_2</kbd> as <kbd>example_2.html</kbd> with the default story format:
-
-```
-tweego -o example_2.html example_directory_2
-```
-
-Compile <kbd>example_3.twee</kbd> as <kbd>example_3.html</kbd> with the story format <kbd>snowman</kbd>:
-
-```
-tweego -f snowman -o example_3.html example_3.twee
-```
-
-Compile all files in <kbd>example_directory_4</kbd> as <kbd>example_4.html</kbd> with the default story format while also bundling all files in <kbd>modules_directory_4</kbd> into the &lt;head&gt; element of the compiled HTML:
-
-```
-tweego -o example_4.html -m modules_directory_4 example_directory_4
-```
-
-Decompile <kbd>example_5.html</kbd> as <kbd>example_5.twee</kbd>:
-
-```
-tweego -d -o example5.twee example5.html
-```
-
-
-<!-- ***************************************************************************
-	File & Directory Handling
-**************************************************************************** -->
-<span id="usage-file-and-directory-handling"></span>
-## File &amp; Directory Handling
-
-Tweego allows you to specify an arbitrary number of files and directories on the command line for processing.  In addition to those manually specified, it will recursively search all directories encountered looking for additional files and directories to process.  Generally, this means that you only have to specify the base source directory of your project and Tweego will find all of its files automatically.
-
-<span id="usage-file-and-directory-handling-supported-extensions"></span>
-### Supported File Extensions
-
-Tweego only processes files with the following extensions:
+The following extensions are supported:
 
 <dl>
 <dt><code>.tw</code>, <code>.twee</code></dt>
@@ -167,3 +127,49 @@ Tweego only processes files with the following extensions:
 	</p>
 </dd>
 </dl>
+
+
+<!-- ***************************************************************************
+	File & Directory Handling
+**************************************************************************** -->
+<span id="usage-file-and-directory-handling"></span>
+## File &amp; Directory Handling
+
+Tweego allows you to specify an arbitrary number of files and directories on the command line for processing.  In addition to those manually specified, it will recursively search all directories encountered looking for additional files and directories to process.  Generally, this means that you only have to specify the base source directory of your project and Tweego will find all of its files automatically.
+
+
+<!-- ***************************************************************************
+	Basic Examples
+**************************************************************************** -->
+<span id="usage-basic-examples"></span>
+## Basic Examples
+
+Compile <kbd>example_1.twee</kbd> as <kbd>example_1.html</kbd> with the default story format:
+
+```
+tweego -o example_1.html example_1.twee
+```
+
+Compile all files in <kbd>example_directory_2</kbd> as <kbd>example_2.html</kbd> with the default story format:
+
+```
+tweego -o example_2.html example_directory_2
+```
+
+Compile <kbd>example_3.twee</kbd> as <kbd>example_3.html</kbd> with the story format <kbd>snowman</kbd>:
+
+```
+tweego -f snowman -o example_3.html example_3.twee
+```
+
+Compile all files in <kbd>example_directory_4</kbd> as <kbd>example_4.html</kbd> with the default story format while also bundling all files in <kbd>modules_directory_4</kbd> into the &lt;head&gt; element of the compiled HTML:
+
+```
+tweego -o example_4.html -m modules_directory_4 example_directory_4
+```
+
+Decompile <kbd>example_5.html</kbd> as <kbd>example_5.twee</kbd>:
+
+```
+tweego -d -o example5.twee example5.html
+```
