@@ -117,6 +117,7 @@ tweego -d -o example5.twee example5.html
 
 Tweego allows you to specify an arbitrary number of files and directories on the command line for processing.  In addition to those manually specified, it will recursively search all directories encountered looking for additional files and directories to process.  Generally, this means that you only have to specify the base source directory of your project and Tweego will find all of its files automatically.
 
+<span id="usage-file-and-directory-handling-supported-extensions"></span>
 ### Supported File Extensions
 
 Tweego only processes files with the following extensions:
