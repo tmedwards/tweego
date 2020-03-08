@@ -5,6 +5,7 @@
 <header role="banner">
 <h1>Tweego Documentation</h1>
 <div><tt>{{.VERSION}}</tt> (<time datetime="{{.ISO_DATE}}">{{.DATE}}</time>)</div>
+<div>To search: <kbd>CTRL</kbd>+<kbd>F</kbd> or <kbd>F3</kbd></div>
 </header>
 
 ## [Introduction](#introduction)
