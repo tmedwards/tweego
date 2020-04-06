@@ -82,11 +82,11 @@ The three tags are: alfa, bravo, charlie.
 Mostly likely to come from decompiling Twine&nbsp;2 or Twine&nbsp;1 compiled HTML files.
 
 ```
-:: A passage with no tags {"position"="860,401"}
+:: A passage with no tags {"position":"860,401"}
 Content of the "A passage with no tags" passage.
 
 
-:: A tagged passage with three tags [alfa bravo charlie] {"position"="860,530"}
+:: A tagged passage with three tags [alfa bravo charlie] {"position":"860,530"}
 Content of the "A tagged passage with three tags" passage.
 The three tags are: alfa, bravo, charlie.
 ```
