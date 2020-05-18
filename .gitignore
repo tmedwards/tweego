@@ -15,7 +15,9 @@
 # Documentation
 *.html
 
-# Dependencies
+# Development
+.vscode
+*.code-workspace
 go.sum
 
 # Builds & distribution
