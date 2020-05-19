@@ -13,6 +13,7 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+
 	// external packages
 	"github.com/radovskyb/watcher"
 )
@@ -21,14 +22,18 @@ var programDir string
 var workingDir string
 
 func init() {
-	// Attempt to get the program directory, failure is okay.
+	// Attempt to get the canonical program directory, failure is okay.
 	if pp, err := os.Executable(); err == nil {
-		programDir = filepath.Dir(pp)
+		if pd, err := filepath.EvalSymlinks(filepath.Dir(pp)); err == nil {
+			programDir = pd
+		}
 	}
 
-	// Attempt to get the working directory, failure is okay.
+	// Attempt to get the canonical working directory, failure is okay.
 	if wd, err := os.Getwd(); err == nil {
-		workingDir = wd
+		if wd, err := filepath.EvalSymlinks(wd); err == nil {
+			workingDir = wd
+		}
 	}
 }
 
@@ -49,28 +54,40 @@ func getFilenames(pathnames []string, outFilename string) []string {
 			return nil
 		}
 
-		absolute, err := filepath.Abs(path)
+		// Get the absolute path.
+		absolute, err := absPath(path)
 		if err != nil {
 			return err
 		}
+
+		// The output file must not be one of the input files.
 		if absolute == absOutFile {
 			return errNoOutToIn
 		}
-		relative, _ := filepath.Rel(workingDir, absolute) // Failure is okay.
-		if relative != "" {
-			filenames = append(filenames, relative)
-		} else {
-			filenames = append(filenames, absolute)
+
+		// Return a relative path if one can be resolved and it is shorter than the
+		// absolute path, failure is okay.
+		if relative, err := filepath.Rel(workingDir, absolute); err == nil {
+			if relative, err := filepath.EvalSymlinks(relative); err == nil {
+				if len(relative) < len(absolute) {
+					filenames = append(filenames, relative)
+					return nil
+				}
+			}
 		}
+
+		filenames = append(filenames, absolute)
 		return nil
 	}
 
 	// Get the absolute output filename.
-	absOutFile, err := filepath.Abs(outFilename)
-	if err != nil {
+	if abs, err := absPath(outFilename); err == nil {
+		absOutFile = abs
+	} else {
 		log.Fatalf("error: path %s: %s", outFilename, err.Error())
 	}
 
+	// Walk the pathnames.
 	for _, pathname := range pathnames {
 		if pathname == "-" {
 			log.Print("warning: path -: Reading from standard input is unsupported.")
@@ -179,20 +196,45 @@ func watchFilesystem(pathnames []string, outFilename string, buildCallback func(
 	}
 }
 
+func absPath(original string) (string, error) {
+	var absolute string
+
+	if abs, err := filepath.Abs(original); err == nil {
+		absolute = abs
+		if abs, err := filepath.EvalSymlinks(absolute); err == nil {
+			absolute = abs
+		} else {
+			dir, base := filepath.Split(absolute)
+			if abs, err := filepath.EvalSymlinks(dir); err == nil {
+				absolute = filepath.Join(abs, base)
+			} else {
+				return "", err
+			}
+		}
+	} else {
+		return "", err
+	}
+
+	return absolute, nil
+}
+
 func relPath(original string) string {
-	absolute, err := filepath.Abs(original)
+	absolute, err := absPath(original)
 	if err != nil {
 		// Failure is okay, just return the original path.
 		return original
 	}
 
-	relative, err := filepath.Rel(workingDir, absolute)
-	if err != nil {
-		// Failure is okay, just return the absolute path.
-		return absolute
+	if relative, err := filepath.Rel(workingDir, absolute); err == nil {
+		if relative, err := filepath.EvalSymlinks(relative); err == nil {
+			if len(relative) < len(absolute) {
+				return relative
+			}
+		}
 	}
 
-	return relative
+	// Failure is okay, just return the absolute path.
+	return absolute
 }
 
 func knownFileType(filename string) bool {
