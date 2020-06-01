@@ -34,6 +34,10 @@ func (p *passage) unmarshalMetadata(marshaled []byte) error {
 	if err := json.Unmarshal(marshaled, &metadata); err != nil {
 		return err
 	}
+	// Drop invalid position data.
+	if metadata.Position == "NaN,NaN" {
+		metadata.Position = ""
+	}
 	p.metadata = &passageMetadata{
 		position: metadata.Position,
 		size:     metadata.Size,
