@@ -43,8 +43,8 @@
 
 ## [FAQ &amp; Tips](#faq-and-tips)
 
-* [Avoid processing files](#faq-and-tips-how-to-avoid-processing-files)
-* [Convert Twee2 files to Twee&nbsp;v3](#faq-and-tips-how-to-convert-twee2-files-to-tweev3)
+* [Avoid processing files](#faq-and-tips-avoid-processing-files)
+* [Convert Twee2 files to Twee&nbsp;v3](#faq-and-tips-convert-twee2-files-to-tweev3)
 
 <div>&nbsp;</div>
 </nav>
