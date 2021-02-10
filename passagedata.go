@@ -1,5 +1,5 @@
 /*
-	Copyright © 2014–2020 Thomas Michael Edwards. All rights reserved.
+	Copyright © 2014–2021 Thomas Michael Edwards. All rights reserved.
 	Use of this source code is governed by a Simplified BSD License which
 	can be found in the LICENSE file.
 */
