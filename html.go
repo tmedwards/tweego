@@ -10,6 +10,7 @@ import (
 	// standard packages
 	"bytes"
 	"regexp"
+
 	// external packages
 	"golang.org/x/net/html"
 )

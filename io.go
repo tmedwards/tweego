@@ -17,6 +17,7 @@ import (
 	"os"
 	"runtime"
 	"unicode/utf8"
+
 	// external packages
 	"github.com/paulrosania/go-charset/charset"
 	_ "github.com/paulrosania/go-charset/data" // import the charset data

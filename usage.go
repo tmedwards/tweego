@@ -12,6 +12,7 @@ import (
 	"math"
 	"os"
 	"sort"
+
 	// external packages
 	"github.com/paulrosania/go-charset/charset"
 )

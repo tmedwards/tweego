@@ -15,6 +15,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
 	// external packages
 	"github.com/Masterminds/semver/v3"
 )
