@@ -8,6 +8,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -16,6 +17,40 @@ import (
 	"strings"
 	"time"
 )
+
+func (s *story) toJSON(startName string) []byte {
+	var passages = make([]*passageJSON, 0, 32)
+	for _, p := range s.passages {
+		if p.name == "StoryTitle" || p.name == "StoryData" {
+			continue
+		}
+
+		passages = append(passages, p.toJSON())
+	}
+
+	marshaled, err := json.MarshalIndent(
+		&storyJSON{
+			s.name,
+			s.ifid,
+			startName,
+			twine2OptionsMapToSlice(s.twine2.options),
+			s.twine2.format,
+			s.twine2.formatVersion,
+			strings.Title(tweegoName),
+			tweegoVersion.Version(),
+			passages,
+		},
+		"",
+		"\t",
+	)
+	if err != nil {
+		// NOTE: We should never be able to see an error here.  If we do,
+		// then something truly exceptional—in a bad way—has happened, so
+		// we get our panic on.
+		panic(err)
+	}
+	return marshaled
+}
 
 func (s *story) toTwee(outMode outputMode) []byte {
 	var data []byte

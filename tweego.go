@@ -64,6 +64,11 @@ func buildOutput(c *config) *story {
 
 	// Write the output.
 	switch c.outMode {
+	case outModeJSON:
+		// Write out the project as JSON.
+		if _, err := fileWriteAll(c.outFile, alignRecordSeparators(s.toJSON(c.startName))); err != nil {
+			log.Fatalf(`error: %s`, err.Error())
+		}
 	case outModeTwee3, outModeTwee1:
 		// Write out the project as Twee source.
 		if _, err := fileWriteAll(c.outFile, alignRecordSeparators(s.toTwee(c.outMode))); err != nil {

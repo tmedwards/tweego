@@ -10,6 +10,12 @@ import (
 	"encoding/json"
 )
 
+type passageJSON struct {
+	Name string   `json:"name"`
+	Tags []string `json:"tags,omitempty"`
+	Text string   `json:"text"`
+}
+
 type passageMetadataJSON struct {
 	Position string `json:"position,omitempty"` // Twine 2 (`position`) & Twine 1 (`twine-position`).
 	Size     string `json:"size,omitempty"`     // Twine 2 (`size`).
