@@ -1,4 +1,5 @@
 # Binaries
+tweego
 *.exe
 *.exe~
 *.dll
@@ -23,6 +24,7 @@ go.sum
 # Builds & distribution
 dist/
 licenses/
+node_modules/
 
 # Testing
 storyformats/
