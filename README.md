@@ -61,3 +61,18 @@ go build
 Assuming that completed with no errors, your compiled Tweego binary should be in the current directory—likely named either `tweego` or `tweego.exe` depending on your OS.
 
 Finally, see [Tweego's documentation](http://www.motoslave.net/tweego/docs/) for information on how to set it up and use it.
+
+## GETTING STORY FORMATS
+
+Story formats are not bundled with tweego. You can download them from the twinejs repository
+
+    git clone https://github.com/klembot/twinejs
+
+And then link them to your storyformats directory
+
+    ln -s "$(pwd)/public/story-formats" ~/storyformats
+
+And then verify it worked by listing formats
+
+    tweego --list-formats
+
