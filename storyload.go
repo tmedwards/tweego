@@ -14,9 +14,11 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
 	// internal packages
 	twee2 "github.com/tmedwards/tweego/internal/twee2compat"
 	twlex "github.com/tmedwards/tweego/internal/tweelexer"
+
 	// external packages
 	"golang.org/x/net/html"
 )
@@ -48,6 +50,14 @@ func (s *story) load(filenames []string, c *config) {
 			}
 		case "js":
 			if err := s.loadTagged("script", filename, c.encoding); err != nil {
+				log.Fatalf("error: load %s: %s", filename, err.Error())
+			}
+		case "yaml":
+			if err := s.loadTagged("data", filename, c.encoding); err != nil {
+				log.Fatalf("error: load %s: %s", filename, err.Error())
+			}
+		case "njk":
+			if err := s.loadTagged("template", filename, c.encoding); err != nil {
 				log.Fatalf("error: load %s: %s", filename, err.Error())
 			}
 		case "otf", "ttf", "woff", "woff2":
