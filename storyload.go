@@ -9,6 +9,8 @@ package main
 import (
 	// standard packages
 	"bytes"
+	"compress/zlib"
+	b64 "encoding/base64"
 	"fmt"
 	"log"
 	"path/filepath"
@@ -389,10 +391,26 @@ func (s *story) loadTagged(tag, filename, encoding string) error {
 		return err
 	}
 
+	var str string
+
+	if tag == "data" || tag == "template" {
+		// Add Compression
+		var b bytes.Buffer
+		w := zlib.NewWriter(&b)
+		w.Write(source)
+		w.Close()
+
+		// str = b64.StdEncoding.EncodeToString(source)
+		str = b64.StdEncoding.EncodeToString(b.Bytes())
+		// fmt.Println(filename, len(b.Bytes()), len(str))
+	} else {
+		str = string(source)
+	}
+
 	s.add(newPassage(
 		filepath.Base(filename),
 		[]string{tag},
-		string(source),
+		str,
 	))
 
 	return nil
