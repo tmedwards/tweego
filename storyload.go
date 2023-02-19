@@ -54,10 +54,14 @@ func (s *story) load(filenames []string, c *config) {
 			if err := s.loadTagged("script", filename, c.encoding); err != nil {
 				log.Fatalf("error: load %s: %s", filename, err.Error())
 			}
-		case "yaml":
+		case "yaml", "json":
 			if err := s.loadTagged("data", filename, c.encoding); err != nil {
 				log.Fatalf("error: load %s: %s", filename, err.Error())
 			}
+		// case "json":
+		// 	if err := s.loadJson("data", filename, c.encoding); err != nil {
+		// 		log.Fatalf("error: load %s: %s", filename, err.Error())
+		// 	}
 		case "njk":
 			if err := s.loadTagged("template", filename, c.encoding); err != nil {
 				log.Fatalf("error: load %s: %s", filename, err.Error())
