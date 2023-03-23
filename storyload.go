@@ -9,14 +9,18 @@ package main
 import (
 	// standard packages
 	"bytes"
+	"compress/zlib"
+	b64 "encoding/base64"
 	"fmt"
 	"log"
 	"path/filepath"
 	"strconv"
 	"strings"
+
 	// internal packages
 	twee2 "github.com/tmedwards/tweego/internal/twee2compat"
 	twlex "github.com/tmedwards/tweego/internal/tweelexer"
+
 	// external packages
 	"golang.org/x/net/html"
 )
@@ -48,6 +52,18 @@ func (s *story) load(filenames []string, c *config) {
 			}
 		case "js":
 			if err := s.loadTagged("script", filename, c.encoding); err != nil {
+				log.Fatalf("error: load %s: %s", filename, err.Error())
+			}
+		case "yaml", "json":
+			if err := s.loadTagged("data", filename, c.encoding); err != nil {
+				log.Fatalf("error: load %s: %s", filename, err.Error())
+			}
+		// case "json":
+		// 	if err := s.loadJson("data", filename, c.encoding); err != nil {
+		// 		log.Fatalf("error: load %s: %s", filename, err.Error())
+		// 	}
+		case "njk":
+			if err := s.loadTagged("template", filename, c.encoding); err != nil {
 				log.Fatalf("error: load %s: %s", filename, err.Error())
 			}
 		case "otf", "ttf", "woff", "woff2":
@@ -379,10 +395,26 @@ func (s *story) loadTagged(tag, filename, encoding string) error {
 		return err
 	}
 
+	var str string
+
+	if tag == "data" || tag == "template" {
+		// Add Compression
+		var b bytes.Buffer
+		w := zlib.NewWriter(&b)
+		w.Write(source)
+		w.Close()
+
+		// str = b64.StdEncoding.EncodeToString(source)
+		str = b64.StdEncoding.EncodeToString(b.Bytes())
+		// fmt.Println(filename, len(b.Bytes()), len(str))
+	} else {
+		str = string(source)
+	}
+
 	s.add(newPassage(
 		filepath.Base(filename),
 		[]string{tag},
-		string(source),
+		str,
 	))
 
 	return nil
