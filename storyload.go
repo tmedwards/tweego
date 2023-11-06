@@ -52,6 +52,8 @@ func (s *story) load(filenames []string, c *config) {
 			if err := s.loadTagged("script", filename, c.encoding); err != nil {
 				log.Fatalf("error: load %s: %s", filename, err.Error())
 			}
+		case "mjs":
+			log.Fatalf("error: load %s: ESM files must be loaded via the module option", filename)
 		case "otf", "ttf", "woff", "woff2":
 			if err := s.loadFont(filename); err != nil {
 				log.Fatalf("error: load %s: %s", filename, err.Error())
