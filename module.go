@@ -77,7 +77,6 @@ func loadModuleByType(typeValue, filename, encoding string) ([]byte, error) {
 
 	var (
 		idSlug = tag + "-module-" + slugify(strings.Split(filepath.Base(filename), ".")[0])
-		tag    string
 		b      bytes.Buffer
 	)
 
