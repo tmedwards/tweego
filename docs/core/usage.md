@@ -58,7 +58,7 @@ Where <code>[options]</code> are mostly optional configuration flags—see [Opti
 	<p>Log various story statistics.  Primarily, passage and word counts.</p>
 	<p role="note"><b>Note:</b> Unsupported when watch mode (<kbd>-w</kbd>, <kbd>--watch</kbd>) is enabled.</p>
 </dd>
-<dt><kbd>-m SRC</kbd>, <kbd>--module=SRC</kbd></dt><dd>Module sources (repeatable); may consist of supported files and/or directories to recursively search for such files.  Each file will be wrapped within the appropriate markup and bundled into the &lt;head&gt; element of the compiled HTML.  Supported files: <code>.css</code>, <code>.js</code>, <code>.otf</code>, <code>.ttf</code>, <code>.woff</code>, <code>.woff2</code>.</dd>
+<dt><kbd>-m SRC</kbd>, <kbd>--module=SRC</kbd></dt><dd>Module sources (repeatable); may consist of supported files and/or directories to recursively search for such files.  Each file will be wrapped within the appropriate markup and bundled into the &lt;head&gt; element of the compiled HTML.  Supported files: <code>.css</code>, <code>.js</code>, <code>.mjs</code>, <code>.otf</code>, <code>.ttf</code>, <code>.woff</code>, <code>.woff2</code>.</dd>
 <dt><kbd>--no-trim</kbd></dt><dd>
 	<p>Do not trim whitespace surrounding passages—i.e., whitespace preceding and trailing the actual text of the passage.  By default, such whitespace is removed when processing passages.</p>
 	<p role="note"><b>Note:</b> It is recommended that you do not disable passage trimming.</p>
