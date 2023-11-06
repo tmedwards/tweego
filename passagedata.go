@@ -11,9 +11,10 @@ import (
 )
 
 type passageJSON struct {
-	Name string   `json:"name"`
-	Tags []string `json:"tags,omitempty"`
-	Text string   `json:"text"`
+	Name     string              `json:"name"`
+	Tags     []string            `json:"tags,omitempty"`
+	Metadata passageMetadataJSON `json:"metadata,omitempty"`
+	Text     string              `json:"text"`
 }
 
 type passageMetadataJSON struct {
