@@ -45,6 +45,7 @@ Options:
   -j, --json               Output JSON, instead of compiled HTML.
       --list-charsets      List the supported input character sets, then exit.
       --list-formats       List the available story formats, then exit.
+      --list-formats-csv   List the available story formats as CSV, then exit.
       --log-files          Log the processed input files.
   -l, --log-stats          Log various story statistics.
   -m SRC, --module=SRC     Module sources (repeatable); may consist of supported
@@ -116,6 +117,33 @@ func usageFormats(formats storyFormatsMap) {
 	}
 	fmt.Fprintln(os.Stderr)
 	os.Exit(1)
+}
+
+// formats the list of supported story formats as csv for the user
+func usageFormatsCSV(formats storyFormatsMap) {
+	fmt.Fprintln(os.Stdout)
+	if formats.isEmpty() {
+		fmt.Fprintln(os.Stderr, "Story formats not found.")
+		os.Exit(1)
+	} else {
+		ids := formats.ids()
+		sort.Sort(StringsInsensitively(ids))
+		fmt.Fprintln(os.Stdout, "id,name,version,details")
+		for _, id := range ids {
+			f := formats[id]
+			fmt.Fprint(os.Stdout, f.id)
+			if f.isTwine2Style() {
+				fmt.Fprintf(os.Stdout, ",%s,%s,", f.name, f.version)
+				if f.proofing {
+					fmt.Fprint(os.Stdout, "proofing")
+				}
+			} else {
+				fmt.Fprint(os.Stdout, ",,,")
+			}
+			fmt.Fprintln(os.Stdout)
+		}
+	}
+	os.Exit(0)
 }
 
 func usageVersion() {
