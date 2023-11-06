@@ -1,5 +1,5 @@
 /*
-	Copyright © 2014–2021 Thomas Michael Edwards. All rights reserved.
+	Copyright © 2014–2023 Thomas Michael Edwards. All rights reserved.
 	Use of this source code is governed by a Simplified BSD License which
 	can be found in the LICENSE file.
 */
@@ -33,9 +33,11 @@ func loadModules(filenames []string, encoding string) []byte {
 		switch normalizedFileExt(filename) {
 		// NOTE: The case values here should match those in `filesystem.go:knownFileType()`.
 		case "css":
-			source, err = loadModuleTagged("style", filename, encoding)
+			source, err = loadModuleByType("text/css", filename, encoding)
 		case "js":
-			source, err = loadModuleTagged("script", filename, encoding)
+			source, err = loadModuleByType("text/javascript", filename, encoding)
+		case "mjs":
+			source, err = loadModuleByType("module", filename, encoding)
 		case "otf", "ttf", "woff", "woff2":
 			source, err = loadModuleFont(filename)
 		default:
@@ -55,7 +57,7 @@ func loadModules(filenames []string, encoding string) []byte {
 	return bytes.Join(headTags, []byte("\n"))
 }
 
-func loadModuleTagged(tag, filename, encoding string) ([]byte, error) {
+func loadModuleByType(typeValue, filename, encoding string) ([]byte, error) {
 	source, err := fileReadAllWithEncoding(filename, encoding)
 	if err != nil {
 		return nil, err
@@ -65,24 +67,25 @@ func loadModuleTagged(tag, filename, encoding string) ([]byte, error) {
 		return source, nil
 	}
 
-	var (
-		idSlug   = tag + "-module-" + slugify(strings.Split(filepath.Base(filename), ".")[0])
-		mimeType string
-		b        bytes.Buffer
-	)
-	switch tag {
-	case "script":
-		mimeType = "text/javascript"
-	case "style":
-		mimeType = "text/css"
+	var tag string
+	switch typeValue {
+	case "module", "text/javascript":
+		tag = "script"
+	case "text/css":
+		tag = "style"
 	}
+
+	var (
+		idSlug = tag + "-module-" + slugify(strings.Split(filepath.Base(filename), ".")[0])
+		b      bytes.Buffer
+	)
 
 	if _, err := fmt.Fprintf(
 		&b,
 		`<%s id=%q type=%q>%s</%[1]s>`,
 		tag,
 		idSlug,
-		mimeType,
+		typeValue,
 		source,
 	); err != nil {
 		return nil, err
