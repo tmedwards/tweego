@@ -32,12 +32,17 @@ func (s *story) toJSON(startName string) []byte {
 		&storyJSON{
 			s.name,
 			s.ifid,
-			startName,
-			twine2OptionsMapToSlice(s.twine2.options),
 			s.twine2.format,
 			s.twine2.formatVersion,
+			twine2OptionsMapToSlice(s.twine2.options),
+			startName,
+			s.twine2.tags,
+			"", // s.twine2.tagColors ← twine2TagColorsMap
+			s.twine2.zoom,
 			strings.Title(tweegoName),
 			tweegoVersion.Version(),
+			"", // s.twine2.style,
+			"", // s.twine2.script,
 			passages,
 		},
 		"",
@@ -212,7 +217,8 @@ func (s *story) getTwine2DataChunk(startName string) []byte {
 	var (
 		data    []byte
 		startID string
-		options string
+		optsValue string
+		tagsVal string
 		pid     uint
 	)
 
@@ -345,32 +351,42 @@ func (s *story) getTwine2DataChunk(startName string) []byte {
 	}
 
 	// Add the <tw-storydata> wrapper.
+
 	/*
-		<tw-storydata name="…" startnode="…" creator="…" creator-version="…" ifid="…"
-			zoom="…" format="…" format-version="…" options="…" hidden>…</tw-storydata>
+		<tw-storydata name="…" startnode="…" creator="…" creator-version="…" format="…" format-version="…" ifid="…" options="…" tags="…" zoom="…" hidden>…</tw-storydata>
 	*/
-	if optCount := len(s.twine2.options); optCount > 0 {
-		opts := make([]string, 0, optCount)
+	if optsCount := len(s.twine2.options); optsCount > 0 {
+		opts := make([]string, 0, optsCount)
 		for opt, val := range s.twine2.options {
 			if val {
 				opts = append(opts, opt)
 			}
 		}
-		options = strings.Join(opts, " ")
+		optsValue = strings.Join(opts, " ")
+	}
+	if tagsCount := len(s.twine2.tags); tagsCount > 0 {
+		tags := make([]string, 0, tagsCount)
+		for tag, val := range s.twine2.tags {
+			if val {
+				tags = append(tags, tag)
+			}
+		}
+		tagsValue = strings.Join(tags, " ")
 	}
 	data = append([]byte(fmt.Sprintf(
 		`<!-- UUID://%s// -->`+
-			`<tw-storydata name=%q startnode=%q creator=%q creator-version=%q ifid=%q zoom=%q format=%q format-version=%q options=%q hidden>`,
+			`<tw-storydata name=%q startnode=%q creator=%q creator-version=%q format=%q format-version=%q ifid=%q options=%q tags=%q zoom=%q hidden>`,
 		s.ifid,
 		attrEscapeString(s.name),
 		startID,
 		attrEscapeString(strings.Title(tweegoName)),
 		attrEscapeString(tweegoVersion.Version()),
-		attrEscapeString(s.ifid),
-		attrEscapeString(strconv.FormatFloat(s.twine2.zoom, 'f', -1, 32)),
 		attrEscapeString(s.format.name),
 		attrEscapeString(s.format.version),
-		attrEscapeString(options),
+		attrEscapeString(s.ifid),
+		attrEscapeString(optsValue),
+		attrEscapeString(tagsValue),
+		attrEscapeString(strconv.FormatFloat(s.twine2.zoom, 'f', -1, 32)),
 	)), data...)
 	data = append(data, `</tw-storydata>`...)
 
