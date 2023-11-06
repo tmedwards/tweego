@@ -244,7 +244,7 @@ func knownFileType(filename string) bool {
 		"tw2", "twee2",
 		"htm", "html",
 		"css",
-		"js",
+		"js", "mjs",
 		"otf", "ttf", "woff", "woff2",
 		"gif", "jpeg", "jpg", "png", "svg", "tif", "tiff", "webp",
 		"aac", "flac", "m4a", "mp3", "oga", "ogg", "opus", "wav", "wave", "weba",
