@@ -29,6 +29,7 @@ func (s *story) toJSON(startName string) []byte {
 	}
 
 	marshaled, err := json.MarshalIndent(
+		// TODO: Finish this.
 		&storyJSON{
 			s.name,
 			s.ifid,
