@@ -10,6 +10,7 @@ package main
 
 import (
 	"log"
+	"regexp"
 )
 
 const tweegoName = "tweego"
@@ -70,10 +71,29 @@ func buildOutput(c *config) *story {
 			log.Fatalf(`error: %s`, err.Error())
 		}
 	case outModeTwee3, outModeTwee1:
-		// Write out the project as Twee source.
-		if _, err := fileWriteAll(c.outFile, alignRecordSeparators(s.toTwee(c.outMode))); err != nil {
+
+		switch c.expand {
+		case true:
+			// Make a Regex to say we only want letters and numbers
+			reg, err := regexp.Compile("[^a-zA-Z0-9]+")
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			for _, p := range s.passages {
+				processedString := reg.ReplaceAllString(p.name, "")
+				if _, err := fileWriteAll(processedString, []byte(p.toTwee(c.outMode))); err != nil {
+					log.Fatalf(`error: %s`, err.Error())
+				}
+			}
+		case false:
+			// Write out the project as Twee source.
+			if _, err := fileWriteAll(c.outFile, alignRecordSeparators(s.toTwee(c.outMode))); err != nil {
 			log.Fatalf(`error: %s`, err.Error())
 		}
+		}
+
+
 	case outModeTwine2Archive:
 		// Write out the project as Twine 2 archived HTML.
 		if _, err := fileWriteAll(c.outFile, s.toTwine2Archive(c.startName)); err != nil {

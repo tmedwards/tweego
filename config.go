@@ -39,6 +39,7 @@ type config struct {
 	common
 
 	encoding    string     // input encoding
+	expand      bool       // expand story passages into single files
 	sourcePaths []string   // slice of paths to seach for source files
 	modulePaths []string   // slice of paths to seach for module files
 	headFile    string     // name of the head file
@@ -128,6 +129,7 @@ func newConfig() *config {
 	options.Add("archive_twine2", "-a|--archive-twine2")
 	options.Add("archive_twine1", "--archive-twine1")
 	options.Add("decompile_twee3", "-d|--decompile-twee3|--decompile") // NOTE: "--decompile" is deprecated.
+	options.Add("expand", "--expand")
 	options.Add("decompile_twee1", "--decompile-twee1")
 	options.Add("encoding", "-c=s|--charset=s")
 	options.Add("format", "-f=s|--format=s")
@@ -160,6 +162,8 @@ func newConfig() *config {
 				c.outMode = outModeTwee1
 			case "encoding":
 				c.encoding = val.(string)
+			case "expand":
+				c.expand = true
 			case "format":
 				c.cmdline.formatID = val.(string)
 				c.formatID = c.cmdline.formatID
