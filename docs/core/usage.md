@@ -86,7 +86,9 @@ The following extensions are supported:
 <dt><code>.tw</code>, <code>.twee</code></dt>
 <dd>
 	<p>Twee notation source files to process for passages.</p>
-	<p role="note"><b>Note:</b> If any of these files are in the unofficial Twee2 notation, you must manually enable the Twee2 compatibility mode via its command line option (<kbd>--twee2-compat</kbd>).</p>
+	<p role="note"><b>Note:</b>
+	If any of these files are in the unofficial Twee2 notation, you must manually enable the Twee2 compatibility mode via its command line option (<kbd>--twee2-compat</kbd>).
+	</p>
 </dd>
 <dt><code>.tw2</code>, <code>.twee2</code></dt>
 <dd>Unofficial Twee2 notation source files to process for passages.  Twee2 compatibility mode is automatically enabled for files with these extensions.</dd>
@@ -96,6 +98,13 @@ The following extensions are supported:
 <dd>CSS source files to bundle.</dd>
 <dt><code>.js</code></dt>
 <dd>JavaScript source files to bundle.</dd>
+<dt><code>.mjs</code></dt>
+<dd>
+	<p>JavaScript module (ESM) source files to bundle.</p>
+	<p role="note"><b>Note:</b>
+	May only be used with the module option (<kbd>-m SRC</kbd>, <kbd>--module=SRC</kbd>).
+	</p>
+</dd>
 <dt><code>.otf</code>, <code>.ttf</code>, <code>.woff</code>, <code>.woff2</code></dt>
 <dd>Font files to bundle, as <code>@font-face</code> style rules.  The generated name of the font family will be the font's base filename sans its extension—e.g., the family name for <code>chinacat.tff</code> will be <code>chinacat</code>.</dd>
 <dt><code>.gif</code>, <code>.jpeg</code>, <code>.jpg</code>, <code>.png</code>, <code>.svg</code>, <code>.tif</code>, <code>.tiff</code>, <code>.webp</code></dt>
