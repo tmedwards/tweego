@@ -136,6 +136,7 @@ func newConfig() *config {
 	options.Add("json", "-j|--json")
 	options.Add("listcharsets", "--list-charsets")
 	options.Add("listformats", "--list-formats")
+	options.Add("listformatscsv", "--list-formats-csv")
 	options.Add("logfiles", "--log-files")
 	options.Add("logstats", "-l|--log-stats")
 	options.Add("module", "-m=s+|--module=s+")
@@ -172,6 +173,8 @@ func newConfig() *config {
 				usageCharsets()
 			case "listformats":
 				usageFormats(c.formats)
+			case "listformatscsv":
+				usageFormatsCSV(c.formats)
 			case "logfiles":
 				c.logFiles = true
 			case "logstats":
