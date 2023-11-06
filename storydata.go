@@ -13,70 +13,22 @@ import (
 	"strings"
 )
 
-/*
-{
-  "name": "Example",
-  "ifid": "D674C58C-DEFA-4F70-B7A2-27742230C0FC",
-  "format": "Snowman",
-  "format-version": "3.0.2",
-  "start": "My Starting Passage",
-  "tag-colors": {
-    "bar": "Green",
-    "foo": "red",
-    "qaz": "blue"
-  },
-  "zoom": 0.25,
-  "creator": "Twine",
-  "creator-version": "2.8",
-  "style": "",
-  "script": "",
-  "passages": [
-    {
-      "name": "My Starting Passage",
-      "tags": ["tag1", "tag2"],
-      "metadata": {
-        "position":"600,400",
-        "size":"100,200"
-      },
-      "text": "Double-click this passage to edit it."
-    }
-  ]
-}
-*/
 type storyJSON struct {
-	Name           string         `json:"name"`
-	Ifid           string         `json:"ifid,omitempty"`
-	Options        []string       `json:"options,omitempty"`
-	Start          string         `json:"start,omitempty"`
-	Tags           []string       `json:"tags,omitempty"`
+	Name           string             `json:"name"`
+	Ifid           string             `json:"ifid,omitempty"`
+	Format         string             `json:"format,omitempty"`
+	FormatVersion  string             `json:"format-version,omitempty"`
+	Options        []string           `json:"options,omitempty"`
+	Start          string             `json:"start,omitempty"`
+	Tags           []string           `json:"tags,omitempty"`
 	TagColors      twine2TagColorsMap `json:"tag-colors,omitempty"`
-			Format         string         `json:"format,omitempty"`
-	FormatVersion  string         `json:"format-version,omitempty"`
-	Creator        string         `json:"creator,omitempty"`
-	CreatorVersion string         `json:"creator-version,omitempty"`
-	Zoom           float64        `json:"zoom,omitempty"`
-	/*
-		style
-		script
-	*/
-	Passages       []*passageJSON `json:"passages"`
+	Zoom           float64            `json:"zoom,omitempty"`
+	Creator        string             `json:"creator,omitempty"`
+	CreatorVersion string             `json:"creator-version,omitempty"`
+	Style          string             `json:"style,omitempty"`
+	Script         string             `json:"script,omitempty"`
+	Passages       []*passageJSON     `json:"passages"`
 }
-
-/*
-	<tw-storydata
-		name="${escape(story.name)}"
-		startnode="${startLocalId || ''}"
-		creator="${escape(appInfo.name)}"
-		creator-version="${escape(appInfo.version)}"
-		format="${escape(story.storyFormat)}"
-		format-version="${escape(story.storyFormatVersion)}"
-		ifid="${escape(story.ifid)}"
-		options="${escape(formatOptions)}"
-		tags="${escape(story.tags.join(' '))}"
-		zoom="${escape(story.zoom.toString())}"
-		hidden
-	>
-*/
 
 type storyDataJSON struct {
 	Ifid          string             `json:"ifid,omitempty"`
@@ -123,6 +75,7 @@ func (s *story) unmarshalStoryData(marshaled []byte) error {
 	s.twine2.formatVersion = storyData.FormatVersion
 	s.twine2.options = twine2OptionsSliceToMap(storyData.Options)
 	s.twine2.start = storyData.Start
+	s.twine2.tags = storyData.Tags
 	s.twine2.tagColors = storyData.TagColors
 	if storyData.Zoom != 0 {
 		s.twine2.zoom = storyData.Zoom
