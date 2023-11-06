@@ -48,6 +48,7 @@ Where <code>[options]</code> are mostly optional configuration flags—see [Opti
 <dt><kbd>--head=FILE</kbd></dt><dd>Name of the file whose contents will be appended as-is to the &lt;head&gt; element of the compiled HTML.</dd>
 <dt><kbd>--list-charsets</kbd></dt><dd>List the supported input character sets, then exit.</dd>
 <dt><kbd>--list-formats</kbd></dt><dd>List the available story formats, then exit.</dd>
+<dt><kbd>--list-formats-csv</kbd></dt><dd>List the available story formats as CSV, then exit.</dd>
 <dt><kbd>--log-files</kbd></dt>
 <dd>
 	<p>Log the processed input files.</p>
